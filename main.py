@@ -1,5 +1,7 @@
 from book import AddressBook
-from handlers import parse_input, change_contact, add_contact, show_phones, add_birthday, show_birthday, birthdays
+from handlers import (parse_input, change_contact,
+                      add_contact, show_phones, add_birthday,
+                      show_birthday, birthdays)
 
 
 def main():

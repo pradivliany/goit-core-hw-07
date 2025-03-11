@@ -28,10 +28,12 @@ class Phone(Field):
 class Birthday(Field):
     def __init__(self, value):
         try:
-            birthday_datetime = datetime.strptime(value, '%d.%m.%Y')
-            self.value = birthday_datetime
-        except ValueError:
-            raise ValueError("Invalid date format. Use DD.MM.YYYY")
+            test = datetime.strptime(value, '%d.%m.%Y')
+            if test > datetime.now():
+                raise ValueError('Not realistic. Date can not be in the future')
+            super().__init__(value)
+        except ValueError as err:
+            raise ValueError(f'Invalid date format or value. {err}')
 
 
 class Record:
@@ -89,6 +91,17 @@ class AddressBook(UserDict):
         txt = 'Address Book:\n'
         if not self.data:
             return txt + 'Address book is empty'
-        result = '\n'.join(str(el) for el in self.data.values())
-        txt += result
+
+        result = []
+        for record in self.data.values():
+            result_str = ''
+            txt_name = f'Contact name: {record.name}, '
+            txt_phone = f'phones : {", ".join([phone.value for phone in record.phones])}, '
+            txt_birthday = f'birthday: {"Unknown" if record.birthday is None else record.birthday.value}'
+            result_str += txt_name
+            result_str += txt_phone
+            result_str += txt_birthday
+            result.append(result_str)
+
+        txt += '\n'.join(result)
         return txt

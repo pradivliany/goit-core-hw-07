@@ -98,7 +98,7 @@ def show_birthday(args, book):   # command = show-birthday
     if not record.birthday:
         return 'This contact does not have a date of birth.'
 
-    return record.birthday.value.strftime('%d.%m.%Y')
+    return record.birthday.value
 
 
 @input_error

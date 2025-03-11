@@ -1,4 +1,4 @@
-from datetime import timedelta, date
+from datetime import timedelta, date, datetime
 
 
 def find_next_weekday(start_date, weekday):
@@ -22,7 +22,7 @@ def get_upcoming_birthdays(records, days: int = 7):
         if record.birthday is None:
             continue
 
-        birthday_this_year = record.birthday.value.replace(year=today.year).date()
+        birthday_this_year = datetime.strptime(record.birthday.value, '%d.%m.%Y').replace(year=today.year).date()
 
         if birthday_this_year < today:
             birthday_this_year = birthday_this_year.replace(year=today.year + 1)
